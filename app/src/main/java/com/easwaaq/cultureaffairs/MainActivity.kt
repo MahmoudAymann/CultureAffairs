@@ -10,9 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,28 +45,37 @@ fun DefaultPreview() {
                 .fillMaxSize()
                 .background(PrimaryColor),
         ) {
-            val (image, bottomSurface) = tcreateRef()
+            val (image, bottomSurface) = createRefs()
             Image(
                 painter = painterResource(id = R.drawable.app_logo),
                 contentDescription = "app logo",
                 modifier = Modifier
-                    .size(150.dp)
-                    .padding(20.dp)
-                    .background(color = Color.White, shape =
-                    RoundedCornerShape(
-                        topStart = 16.dp,
-                        bottomStart = 16.dp,
-                        bottomEnd = 16.dp
-                    ))
+                    .constrainAs(image) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(bottomSurface.top)
+                    }
+                    .background(
+                        color = Color.White, shape =
+                        RoundedCornerShape(
+                            topStart = 16.dp,
+                            bottomStart = 16.dp,
+                            bottomEnd = 16.dp
+                        )
+                    )
+                    .padding(15.dp)
+                    .size(60.dp)
             )
 
             Surface(
-                shape = RoundedCornerShape(topStart = 16.dp), shadowElevation = 1.5.dp,
+                shape = RoundedCornerShape(topStart = 40.dp), shadowElevation = 1.5.dp,
                 modifier = Modifier
-                    .background(Color.White)
-                    .padding(top = 60.dp)
+                    .constrainAs(bottomSurface) {
+                        bottom.linkTo(parent.bottom)
+                    }
                     .fillMaxWidth()
-                    .fillMaxHeight(.8f)
+                    .fillMaxHeight(.7f)
             ) {
             }
         }
