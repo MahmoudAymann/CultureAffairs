@@ -118,7 +118,7 @@ fun setView() {
                         style = MaterialTheme.typography.headlineMedium
                     )
 
-                    createInputField(
+                    CreateInputField(
                         modifier = Modifier
                             .constrainAs(etMail) {
                                 top.linkTo(titleLogin.bottom, 60.dp)
@@ -131,7 +131,7 @@ fun setView() {
                         }
                     )
 
-                    createInputField(
+                    CreateInputField(
                         modifier = Modifier
                             .constrainAs(etPassword) {
                                 top.linkTo(etMail.bottom, 24.dp)
@@ -147,7 +147,7 @@ fun setView() {
                         }
                     )
                     //Button
-                    createButton(modifier = Modifier
+                    CreateButton(modifier = Modifier
                         .constrainAs(btnLogin) {
                             top.linkTo(etPassword.bottom, 45.dp)
                         }
@@ -162,7 +162,7 @@ fun setView() {
 }
 
 @Composable
-fun createButton(modifier: Modifier, @StringRes text: Int, onClick: () -> Unit) {
+fun CreateButton(modifier: Modifier, @StringRes text: Int, onClick: () -> Unit) {
     ElevatedButton(onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
@@ -181,7 +181,7 @@ fun createButton(modifier: Modifier, @StringRes text: Int, onClick: () -> Unit) 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createInputField(
+fun CreateInputField(
     modifier: Modifier,
     @StringRes label: Int,
     isPassword: Boolean = false,
