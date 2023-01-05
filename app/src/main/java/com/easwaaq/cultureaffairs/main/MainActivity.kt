@@ -4,35 +4,28 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.easwaaq.cultureaffairs.R
+import com.easwaaq.cultureaffairs.extension.UiComponents.CreateButton
+import com.easwaaq.cultureaffairs.extension.UiComponents.CreateInputField
 import com.easwaaq.cultureaffairs.extension.UiExtensions.advanceShadow
 import com.easwaaq.cultureaffairs.ui.theme.*
 
@@ -124,7 +117,9 @@ fun setView() {
                                 top.linkTo(titleLogin.bottom, 60.dp)
                             }
                             .advanceShadow(
-                                color = ShadowColor
+                                color = ShadowColor,
+                                borderRadius = 16.dp,
+                                elevation = 5.dp,
                             ),
                         label = R.string.mail,
                         valueCallBack = { value ->
@@ -137,7 +132,9 @@ fun setView() {
                                 top.linkTo(etMail.bottom, 24.dp)
                             }
                             .advanceShadow(
-                                color = ShadowColor
+                                color = ShadowColor,
+                                borderRadius = 16.dp,
+                                elevation = 5.dp,
                             ),
                         label = R.string.password,
                         isPassword = true,
@@ -151,7 +148,18 @@ fun setView() {
                         .constrainAs(btnLogin) {
                             top.linkTo(etPassword.bottom, 45.dp)
                         }
-                        .fillMaxWidth().height(50.dp), text = R.string.login) {
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .advanceShadow(
+                            color = ShadowColor,
+                            borderRadius = 16.dp,
+                            elevation = 3.dp,
+                        ), shape = RoundedCornerShape(
+                        topEnd = 0.dp,
+                        topStart = 16.dp,
+                        bottomStart = 16.dp,
+                        bottomEnd = 16.dp
+                    ), text = R.string.login) {
                         Log.e("tag", "asdasdasd")
                     }
 
@@ -159,80 +167,4 @@ fun setView() {
             }
         }
     }
-}
-
-@Composable
-fun CreateButton(modifier: Modifier, @StringRes text: Int, onClick: () -> Unit) {
-    ElevatedButton(onClick = onClick,
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSystemInDarkTheme()) PDarkColor else PrimaryColor
-        ),
-        shape = RoundedCornerShape(
-            topEnd = 0.dp,
-            topStart = 16.dp,
-            bottomStart = 16.dp,
-            bottomEnd = 16.dp
-        ), content = {
-            Text(text = stringResource(id = text), color = Color.White)
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CreateInputField(
-    modifier: Modifier,
-    @StringRes label: Int,
-    isPassword: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    valueCallBack: (String) -> Unit
-) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
-    var passwordHidden by rememberSaveable { mutableStateOf(true) }
-    val visualTransformation: VisualTransformation = if (isPassword) {
-        if (passwordHidden)
-            PasswordVisualTransformation() else VisualTransformation.None
-    } else
-        VisualTransformation.None
-    TextField(
-        value = text,
-        onValueChange = { newText ->
-            text = newText
-            valueCallBack.invoke(text.text)
-        },
-        label = {
-            Text(text = stringResource(label))
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier),
-        shape = RoundedCornerShape(
-            topEnd = 0.dp,
-            topStart = 16.dp,
-            bottomStart = 16.dp,
-            bottomEnd = 16.dp
-        ),
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            textColor = ETTextColor,
-            focusedLabelColor = PrimaryColor,
-            unfocusedLabelColor = PrimaryColor,
-            containerColor = Color.White,
-        ),
-        visualTransformation = visualTransformation,
-        keyboardOptions = keyboardOptions,
-        trailingIcon = {
-            if (isPassword)
-                IconButton(onClick = { passwordHidden = !passwordHidden }) {
-                    val visibilityIcon =
-                        if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                    // Please provide localized description for accessibility services
-                    val description = if (passwordHidden) "Show password" else "Hide password"
-                    Icon(imageVector = visibilityIcon, contentDescription = description)
-                }
-        }
-    )
 }
