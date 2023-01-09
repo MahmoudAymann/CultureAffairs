@@ -1,5 +1,7 @@
 package com.easwaaq.cultureaffairs.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 fun String.fromHexToColor():Color = Color(this.removePrefix("#").toLong(16) or 0x00000000FF000000)
@@ -15,3 +17,6 @@ val TertiaryColor = PrimaryColor
 
 val ETTextColor = "#B9B9B9".fromHexToColor()
 val ShadowColor = "#B9B9B9".fromHexToColor()
+
+@Composable
+fun getDynamicColor() = if (isSystemInDarkTheme()) PDarkColor else PrimaryColor

@@ -19,11 +19,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.easwaaq.cultureaffairs.ui.theme.ETTextColor
-import com.easwaaq.cultureaffairs.ui.theme.PDarkColor
-import com.easwaaq.cultureaffairs.ui.theme.PrimaryColor
+import com.easwaaq.cultureaffairs.ui.theme.*
 
 object UiComponents {
+
+    @Composable
+    fun LinearProgressBar(modifier: Modifier, show:Boolean):Unit {
+        val progress = LinearProgressIndicator(modifier=modifier, color = getDynamicColor())
+    }
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun CreateInputField(
@@ -87,7 +91,7 @@ object UiComponents {
         ElevatedButton(onClick = onClick,
             modifier = modifier,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isSystemInDarkTheme()) PDarkColor else PrimaryColor
+                containerColor = getDynamicColor()
             ),
             shape = shape, content = {
                 Text(text = stringResource(id = text), color = Color.White)

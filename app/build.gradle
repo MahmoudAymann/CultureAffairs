@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-android'
-//    id 'kotlinx-serialization'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
@@ -17,7 +16,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        buildConfigField("String", 'BASE_URL', "\"https://easwaaq.com:4433/affairs/api/v1/\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true

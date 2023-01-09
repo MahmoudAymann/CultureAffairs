@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -23,19 +25,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import com.easwaaq.cultureaffairs.R
 import com.easwaaq.cultureaffairs.extension.UiComponents.CreateButton
 import com.easwaaq.cultureaffairs.extension.UiComponents.CreateInputField
 import com.easwaaq.cultureaffairs.extension.UiExtensions.advanceShadow
-import com.easwaaq.cultureaffairs.ui.theme.*
+import com.easwaaq.cultureaffairs.network.AuthServiceImpl
+import com.easwaaq.cultureaffairs.network.login.LoginParam
+import com.easwaaq.cultureaffairs.ui.theme.CultureAffairsTheme
+import com.easwaaq.cultureaffairs.ui.theme.PrimaryColor
+import com.easwaaq.cultureaffairs.ui.theme.ShadowColor
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    private val client = AuthServiceImpl.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-            setView()
+            setView {
+                lifecycleScope.launch {
+                    val loginRes =
+                        client.login(LoginParam(email = "admin2@admin.com", password = "admin1234"))
+                    Log.e("ktor", loginRes.toString())
+                }
+            }
         }
     }
 }
@@ -46,9 +61,9 @@ fun DefaultPreview() {
     setView()
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun setView() {
+fun setView(onButtonClick: () -> Unit = {}) {
+
     CultureAffairsTheme {
         ConstraintLayout(
             modifier = Modifier
@@ -159,9 +174,7 @@ fun setView() {
                         topStart = 16.dp,
                         bottomStart = 16.dp,
                         bottomEnd = 16.dp
-                    ), text = R.string.login) {
-                        Log.e("tag", "asdasdasd")
-                    }
+                    ), text = R.string.login, onClick = onButtonClick)
 
                 }
             }

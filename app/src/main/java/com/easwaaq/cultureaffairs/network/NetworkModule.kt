@@ -12,9 +12,10 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 object NetworkModule {
+    const val TAG = "ktor"
     private const val TIME_OUT = 60_000
 
-    private val ktorHttpClient = HttpClient(Android) {
+    val ktorHttpClient = HttpClient(Android) {
 
         install(JsonFeature) {
             serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
@@ -32,7 +33,7 @@ object NetworkModule {
         install(Logging) {
             logger = object : Logger {
                 override fun log(message: String) {
-                    Log.v("ktor=>", message)
+                    Log.e(TAG, message)
                 }
 
             }
@@ -41,7 +42,7 @@ object NetworkModule {
 
         install(ResponseObserver) {
             onResponse { response ->
-                Log.d("HTTP status:", "${response.status.value}")
+                Log.e(TAG, "${response.status.value}")
             }
         }
 
