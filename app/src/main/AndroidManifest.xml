@@ -13,9 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CultureAffairs"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:name=".CultureAffairsApp">
         <activity
-            android:name=".main.MainActivity"
+            android:name=".modules.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CultureAffairs">
             <intent-filter>

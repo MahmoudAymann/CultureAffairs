@@ -1,7 +1,6 @@
 package com.easwaaq.cultureaffairs.extension
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,8 +23,8 @@ import com.easwaaq.cultureaffairs.ui.theme.*
 object UiComponents {
 
     @Composable
-    fun LinearProgressBar(modifier: Modifier, show:Boolean):Unit {
-        val progress = LinearProgressIndicator(modifier=modifier, color = getDynamicColor())
+    fun LinearProgressBar(modifier: Modifier, show: Boolean): Unit {
+        val progress = LinearProgressIndicator(modifier = modifier, color = getDynamicColor())
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +86,12 @@ object UiComponents {
     }
 
     @Composable
-    fun CreateButton(modifier: Modifier, @StringRes text: Int, shape: Shape= RoundedCornerShape(16.dp), onClick: () -> Unit) {
+    fun CreateButton(
+        modifier: Modifier,
+        @StringRes text: Int,
+        shape: Shape = RoundedCornerShape(16.dp),
+        onClick: () -> Unit
+    ) {
         ElevatedButton(onClick = onClick,
             modifier = modifier,
             colors = ButtonDefaults.buttonColors(
